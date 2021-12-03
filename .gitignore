@@ -2,6 +2,6 @@
 node_modules/
 client/node_modules/
 client/.cache/
-cleint/coverage/
+client/coverage/
 client/dist/*
 client/*.log
