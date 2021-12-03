@@ -1,0 +1,19 @@
+{
+  "name": "charades",
+  "version": "1.0.0",
+  "description": "Multiplayer game hosted in browser where one person acts as the actor and the rest act as guessers. The actor will have webcam enabled and will act out the given word without audio. The guessers will be scored depending on how quickly they come up wiht the correct guess.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server",
+    "dev": "nodemon server"
+  },
+  "author": "Amitt Dosanjh",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "socket.io": "^4.4.0"
+  }
+}
