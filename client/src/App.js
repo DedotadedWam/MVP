@@ -2,6 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import Peer from "simple-peer";
 import io from "socket.io-client";
 
+import { VideoPlayer } from "./components/Videoplayer";
+import { ChatBoard } from "./components/ChatBoard";
+import { GuessBoard } from "./components/GuessBoard";
+import { ScoreBoard } from "./components/ScoreBoard";
+
 const socket = io.connect("http://localhost:5000");
 
 function App() {
@@ -28,7 +33,12 @@ function App() {
     socket.on("callUser", (data) => {});
   }, []);
 
-  return <div className="app">App</div>;
+  return (
+    <div className="app">
+      {/* Video Player */}
+      {/* Messaging Box */}
+    </div>
+  );
 }
 
 export default App;
