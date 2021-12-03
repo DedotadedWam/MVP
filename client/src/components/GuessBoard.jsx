@@ -1,5 +1,5 @@
 import React from "react";
 
 export const GuessBoard = () => {
-  return <div></div>;
+  return <div className="guess-board">GuessBoard</div>;
 };

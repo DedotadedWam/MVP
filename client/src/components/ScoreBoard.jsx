@@ -1,5 +1,5 @@
 import React from "react";
 
 export const ScoreBoard = () => {
-  return <div></div>;
+  return <div className="score-board">ScoreBoard</div>;
 };

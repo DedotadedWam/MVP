@@ -2,10 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import Peer from "simple-peer";
 import io from "socket.io-client";
 
-import { VideoPlayer } from "./components/Videoplayer";
-import { ChatBoard } from "./components/ChatBoard";
-import { GuessBoard } from "./components/GuessBoard";
-import { ScoreBoard } from "./components/ScoreBoard";
+import { Login } from "./components/Login.jsx";
+import { VideoPlayer } from "./components/Videoplayer.jsx";
+import { ChatBoard } from "./components/ChatBoard.jsx";
+import { GuessBoard } from "./components/GuessBoard.jsx";
+import { ScoreBoard } from "./components/ScoreBoard.jsx";
 
 const socket = io.connect("http://localhost:5000");
 
@@ -23,20 +24,21 @@ function App() {
       .getUserMedia({ video: true, audio: false })
       .then((stream) => {
         setStream(stream);
-        mainVideo.current.srcObject = stream;
+        // mainVideo.current.srcObject = stream;
       });
 
     socket.on("me", (id) => {
       setMe(id);
     });
-
-    socket.on("callUser", (data) => {});
   }, []);
 
   return (
-    <div className="app">
-      {/* Video Player */}
-      {/* Messaging Box */}
+    <div className="container">
+      <Login />
+      <ScoreBoard />
+      <VideoPlayer />
+      <GuessBoard />
+      <ChatBoard />
     </div>
   );
 }

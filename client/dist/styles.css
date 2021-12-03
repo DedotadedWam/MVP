@@ -1,0 +1,43 @@
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 29% 34% 34%;
+  grid-template-rows: 59% 39%;
+  column-gap: 1%;
+  row-gap: 1%;
+  height: 100vh;
+  width: 100vw;
+}
+
+.score-board {
+  grid-column: 1 / 2;
+  grid-row: 1 / 3;
+  justify-self: stretch;
+  background-color: red;
+}
+
+.video-player {
+  grid-column: 2 / 4;
+  grid-row: 1 / 2;
+  justify-self: stretch;
+  background-color: blue;
+}
+
+.guess-board {
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+  justify-self: stretch;
+  background-color: green;
+}
+
+.chat-board {
+  grid-column: 3 / 4;
+  grid-row: 2 / 3;
+  justify-self: stretch;
+  background-color: yellow;
+}

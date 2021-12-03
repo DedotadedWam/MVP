@@ -1,5 +1,5 @@
 import React from "react";
 
 export const ChatBoard = () => {
-  return <div></div>;
+  return <div className="chat-board">ChatBoard</div>;
 };

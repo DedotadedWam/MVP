@@ -3,5 +3,5 @@ node_modules/
 client/node_modules/
 client/.cache/
 client/coverage/
-client/dist/*
+client/dist/bundle.js
 client/*.log
