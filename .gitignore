@@ -5,3 +5,4 @@ client/.cache/
 client/coverage/
 client/public/bundle.js
 client/*.log
+client/src/components/SocketContext.js
