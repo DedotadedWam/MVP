@@ -101,3 +101,10 @@ Chat Boxes
   height: 70%;
   overflow-y: auto;
 }
+
+.video-actor {
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg); /* Safari and Chrome */
+  -moz-transform: rotateY(180deg); /* Firefox */
+  height: 100px;
+}
