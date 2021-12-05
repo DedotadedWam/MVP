@@ -3,40 +3,22 @@ import Peer from "simple-peer";
 import io from "socket.io-client";
 
 import { Login } from "./components/Login.jsx";
-import { VideoPlayer } from "./components/VideoPlayer.jsx";
 import { ChatBoard } from "./components/ChatBoard.jsx";
 import { GuessBoard } from "./components/GuessBoard.jsx";
 import { ScoreBoard } from "./components/ScoreBoard.jsx";
+import { ActorVideoPlayer } from "./components/ActorVideoPlayer.jsx";
+import { GuesserVideoPlayer } from "./components/GuesserVideoPlayer.jsx";
 
 // creates the connection to the socket in the server
 const socket = io.connect("http://localhost:5000");
 
 const App = () => {
-  const [actor, setActor] = useState();
-  const [guesser, setGuesser] = useState();
-  const [me, setMe] = useState("");
-  const [stream, setStream] = useState();
-
   // messaging component state
   const [user, setUser] = useState("");
   const [room, setRoom] = useState("");
   const [showChat, setShowChat] = useState(false);
   const [answer, setAnswer] = useState("test");
-
-  const mainVideo = useRef();
-
-  useEffect(() => {
-    navigator.mediaDevices
-      .getUserMedia({ video: true, audio: false })
-      .then((stream) => {
-        setStream(stream);
-        // mainVideo.current.srcObject = stream;
-      });
-
-    socket.on("me", (id) => {
-      setMe(id);
-    });
-  }, []);
+  const [actor, setActor] = useState(false);
 
   const joinRoom = () => {
     if (user !== "" && room !== "") {
@@ -51,11 +33,11 @@ const App = () => {
 
   return (
     <div className="container">
-      <Login setUser={setUser} setRoom={setRoom} />
+      <Login setUser={setUser} setRoom={setRoom} setActor={setActor} />
       {showChat ? (
         <>
           <ScoreBoard />
-          <VideoPlayer />
+          {actor ? <ActorVideoPlayer /> : <GuesserVideoPlayer />}
           <GuessBoard socket={socket} user={user} room={room} answer={answer} />
           <ChatBoard socket={socket} user={user} room={room} />
         </>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 
-export const Login = ({ setUser, setRoom }) => {
+export const Login = ({ setUser, setRoom, setActor }) => {
   const { register, handleSubmit } = useForm();
   const [login, setLogin] = useState(false);
 
@@ -13,6 +13,7 @@ export const Login = ({ setUser, setRoom }) => {
         setLogin(true);
         setUser(d.user);
         setRoom(d.room);
+        setActor(JSON.parse(d.actor));
       })
       .catch((err) => console.error(err));
   };
@@ -48,12 +49,12 @@ export const Login = ({ setUser, setRoom }) => {
             <br />
             <br />
             <label>
-              Word:
+              Actor:
               <br />
               <input
-                name="word"
+                name="actor"
                 type="text"
-                {...register("word", { required: true })}
+                {...register("actor", { required: true })}
               ></input>
             </label>
             <button type="submit" value="Submit">
