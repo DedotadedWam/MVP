@@ -25,15 +25,18 @@ app.post("/login", (req, res) => {
   res.status(200).send("Noice");
 });
 
+const users = {};
+
+const socketToRoom = {};
+
 // creating a connection via out socket, detects if someone connected to the socket.io server
 io.on("connection", (socket) => {
   // provides us with an id on the front end side of things.
-  console.log(`User ${socket.id} connected`);
+  socket.emit("me", socket.id);
 
   // joins a specific room after logging in
   socket.on("joinRoom", (data) => {
     socket.join(data);
-    console.log(`User ${socket.id} joined room ${data}`);
   });
 
   // we recieve a message from the front end, we then send that data we received and send tit back to all users currently in that room!
@@ -46,10 +49,52 @@ io.on("connection", (socket) => {
     socket.to(data.room).emit("receiveGuess", data);
   });
 
+  // socket.on("peerInitiated", ({ signal, from, room }) => {
+  //   socket.to(room).emit("peerRequest", { signal, from, room });
+  // });
+
+  // socket.on("acceptPeer", ({ to, signal }) => {
+  //   io.to(to).emit("peerAccepted", signal);
+  // });
+  socket.on("join room", (roomID) => {
+    if (users[roomID]) {
+      const length = users[roomID].length;
+      if (length === 10) {
+        socket.emit("room full");
+        return;
+      }
+      users[roomID].push(socket.id);
+    } else {
+      users[roomID] = [socket.id];
+    }
+    socketToRoom[socket.id] = roomID;
+    const usersInThisRoom = users[roomID].filter((id) => id !== socket.id);
+
+    socket.emit("all users", usersInThisRoom);
+  });
+
+  socket.on("sending signal", (payload) => {
+    io.to(payload.userToSignal).emit("user joined", {
+      signal: payload.signal,
+      callerID: payload.callerID,
+    });
+  });
+
+  socket.on("returning signal", (payload) => {
+    io.to(payload.callerID).emit("recieving returned signal", {
+      signal: payload.signal,
+      id: socket.id,
+    });
+  });
+
   // provides instruction on waht to do when a user leaves the app or closes the browser.
   socket.on("disconnect", () => {
-    console.log(`User ${socket.id} disconnected`);
-    //TODO: send a patch request to the database to remove the user from the pool of users in a game room.
+    const roomID = socketToRoom[socket.id];
+    let room = users[roomID];
+    if (room) {
+      room = room.filter((id) => id !== socket.id);
+      users[roomID] = room;
+    }
   });
 });
 
