@@ -57,6 +57,8 @@ export const Login = ({ setUser, setRoom, setActor }) => {
                 {...register("actor", { required: true })}
               ></input>
             </label>
+            <br />
+            <br />
             <button type="submit" value="Submit">
               Let's Play!
             </button>

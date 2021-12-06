@@ -11,7 +11,15 @@ const VideoStream = (props) => {
     });
   }, []);
 
-  return <video height="100px" playsInline autoPlay ref={ref} />;
+  return (
+    <video
+      className="actor-video"
+      height={props.height}
+      playsInline
+      autoPlay
+      ref={ref}
+    />
+  );
 };
 
 const RoomVideo = (props) => {
@@ -42,6 +50,7 @@ const RoomVideo = (props) => {
         });
         socketRef.current.on("user joined", (payload) => {
           const peer = addPeer(payload.signal, payload.callerID, stream);
+          peer.isActor = payload.actor;
           peersRef.current.push({
             peerID: payload.callerID,
             peer,
@@ -69,6 +78,7 @@ const RoomVideo = (props) => {
         userToSignal,
         callerID,
         signal,
+        actor: props.actor,
       });
     });
 
@@ -93,12 +103,18 @@ const RoomVideo = (props) => {
 
   return (
     <div className="video-player">
-      <div className="video">
-        <video muted ref={userVideo} autoPlay playsInline />
-        {peers.map((peer, index) => {
-          return <VideoStream key={index} peer={peer} />;
-        })}
-      </div>
+      <video
+        className={props.actor ? "actor-video" : "user-video"}
+        muted
+        ref={userVideo}
+        autoPlay
+        playsInline
+      />
+      {peers.map((peer, index) => {
+        if (peer.isActor) {
+          return <VideoStream key={index} peer={peer} height={"500px"} />;
+        }
+      })}
     </div>
   );
 };

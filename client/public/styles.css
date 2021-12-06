@@ -2,6 +2,8 @@
 *:before,
 *:after {
   box-sizing: border-box;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
 }
 
 .container {
@@ -26,13 +28,16 @@
   grid-row: 1 / 2;
   justify-self: stretch;
   background-color: blue;
+  display: grid;
+  grid-template-columns: 35% 65%;
+  grid-template-rows: 35% 65%;
 }
 
 .guess-board {
   grid-column: 2 / 3;
   grid-row: 2 / 3;
   justify-self: stretch;
-  background-color: green;
+  background-color: limegreen;
 }
 
 .chat-board {
@@ -40,6 +45,13 @@
   grid-row: 2 / 3;
   justify-self: stretch;
   background-color: yellow;
+}
+
+.guess-board,
+.chat-board {
+  display: grid;
+  grid-template-columns: 5% 90% 5%;
+  grid-template-rows: 5% 10% 65% 10% 5%;
 }
 
 /*
@@ -83,28 +95,76 @@ style={{ backgroundColor: 'rgba(0,0,0, 0.85)' }}
 ---------------------------------------------------
 
 Chat Boxes
+  grid-template-columns: 5% 90% 5%;
+  grid-template-rows: 5% 15% 65% 10%;
 
 ---------------------------------------------------
 */
-
 .chat-header,
 .guess-header {
-}
-
-.chat-footer,
-.guess-footer {
+  grid-column: 2 / 3;
+  grid-row: 2/3;
+  font-size: 1.5em;
+  font-weight: bold;
 }
 
 .chat-body,
 .guess-body {
-  width: 95%;
-  height: 70%;
   overflow-y: auto;
+  background-color: white;
+  grid-column: 2 / 3;
+  grid-row: 3/4;
 }
 
-.video-actor {
-  transform: rotateY(180deg);
-  -webkit-transform: rotateY(180deg); /* Safari and Chrome */
-  -moz-transform: rotateY(180deg); /* Firefox */
-  height: 100px;
+.chat-footer,
+.guess-footer {
+  overflow-y: auto;
+  background-color: white;
+  grid-column: 2 / 3;
+  grid-row: 5/6;
+  overflow: visible;
+  background-color: inherit;
+}
+
+.my-guess,
+.my-message {
+  background-color: lightsteelblue;
+  font-weight: bold;
+}
+
+.submit {
+  align-self: right;
+}
+
+.field {
+  width: 85%;
+}
+
+.message-meta,
+.guess-meta {
+  font-weight: normal;
+}
+
+.user-video {
+  z-index: 1;
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+  justify-content: stretch;
+  overflow: hidden;
+  height: 100%;
+}
+
+.actor-video {
+  grid-column: 1 / 3;
+  grid-row: 1 / 3;
+  justify-content: stretch;
+  overflow: hidden;
+  height: 100%;
+  justify-self: stretch;
+}
+
+.answer {
+  grid-column: 2/3;
+  grid-row: 2/4;
+  justify-self: center;
 }

@@ -5,7 +5,8 @@ export const ChatBoard = ({ socket, user, room }) => {
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
 
-  const sendMessage = async () => {
+  const sendMessage = async (e) => {
+    e.preventDefault();
     if (currentMessage !== "") {
       let d = new Date(Date.now());
       d = d.getHours() + ":" + d.getMinutes();
@@ -35,20 +36,29 @@ export const ChatBoard = ({ socket, user, room }) => {
         {messageList.map((messageContent) => {
           return (
             <div className="message">
-              <div>
+              <div
+                className={
+                  messageContent.user === user
+                    ? "my-message"
+                    : "opponents-message"
+                }
+              >
                 <div className="message-content">{messageContent.message}</div>
-                <div className="message-meta">{messageContent.time}</div>
+                <div className="message-meta">{`${messageContent.user} ${messageContent.time}`}</div>
               </div>
             </div>
           );
         })}
       </div>
       <div className="chat-footer">
-        <input
-          type="text"
-          onChange={(e) => setCurrentMessage(e.target.value)}
-        />
-        <button onClick={sendMessage}>Send Message</button>
+        <form onSubmit={sendMessage}>
+          <input
+            type="text"
+            className="field"
+            onChange={(e) => setCurrentMessage(e.target.value)}
+          />
+          <input type="submit"></input>
+        </form>
       </div>
     </div>
   );

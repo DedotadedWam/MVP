@@ -15,7 +15,7 @@ const App = () => {
   const [user, setUser] = useState("");
   const [room, setRoom] = useState("");
   const [showChat, setShowChat] = useState(false);
-  const [answer, setAnswer] = useState("");
+  const [answer, setAnswer] = useState("pelican");
   const [actor, setActor] = useState(false);
   const [me, setMe] = useState("");
 
@@ -43,8 +43,14 @@ const App = () => {
       {showChat ? (
         <>
           <ScoreBoard />
-          <RoomVideo socket={socket} room={room} />
-          <GuessBoard socket={socket} user={user} room={room} answer={answer} />
+          <RoomVideo socket={socket} room={room} user={user} actor={actor} />
+          <GuessBoard
+            socket={socket}
+            user={user}
+            room={room}
+            answer={answer}
+            actor={actor}
+          />
           <ChatBoard socket={socket} user={user} room={room} />
         </>
       ) : null}
