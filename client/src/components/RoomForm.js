@@ -8,11 +8,10 @@ export const RoomForm = ({ role, resetRole, getUser }) => {
   const onSubmit = (d) => {
     const user = { ...d, role };
     axios
-      .post(`/${role}Room`, user)
+      .post(`/${role}Game`, user)
       .then((response) => console.log(response.status))
       .catch((err) => console.log(err));
     getUser(user);
-    resetRole(null);
   };
 
   return (

@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
+var cookieParser = require("cookie-parser");
 
 const app = express();
 const server = require("http").createServer(app);
@@ -17,17 +18,32 @@ app.use(cors());
 app.use(express.static("./client/public"));
 app.use(express.json());
 
-app.post("/hostRoom", (req, res) => {
-  console.log("host room: ", req.body);
-  res.status(200).send("Created Room");
+io.on("connection", (socket) => {
+  socket.on("creating room", (data) => {
+    console.log("creating room route", data);
+    socket.join(data.room);
+  });
+
+  socket.on("joining room", (data) => {
+    console.log("joining room route", data);
+    socket.join(data.room);
+    socket.to(data.room).emit("user joined", data);
+  });
 });
 
-app.post("/joinRoom", (req, res) => {
-  console.log("join room: ", req.body);
-  res.status(200).send("Joined Room");
+app.post("/hostGame", (req, res) => {
+  console.log("host game: ", req.body);
+  res.status(200).send("Created Game");
 });
 
-app.listen(port, () => console.log(`👂 Listening on http://localhost:${port}`));
+app.post("/joinGame", (req, res) => {
+  console.log("join game: ", req.body);
+  res.status(200).send("Joined game");
+});
+
+server.listen(port, () =>
+  console.log(`👂 Listening on http://localhost:${port}`)
+);
 
 // app.post("/login", (req, res) => {
 //   res.status(200).send("Noice");
